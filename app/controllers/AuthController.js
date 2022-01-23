@@ -11,7 +11,8 @@ exports.register = async (req, res) => {
 
   try {
     const saveduser = await newUser.save();
-    res.status(201).json(saveduser);
+    const { password, ...others } = saveduser._doc;
+    res.status(201).json(others);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -29,3 +29,28 @@ exports.userDelete = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.userGet = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const { password, ...others } = user._doc;
+    res.status(200).json(others);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.userGetAll = async (req, res) => {
+  try {
+    const users = await User.find();
+    const allUsers = [];
+    users.map((user) => {
+      const { password, ...others } = user._doc;
+      allUsers.push(others);
+    });
+    //const { password, ...others } = user._doc;
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
